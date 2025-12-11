@@ -1,5 +1,6 @@
 import { showToast } from './utils.js';
 import { db } from './firebase-config.js';
+import { addToCart } from './cart.js';
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // Загрузка данных товара по ID из URL
@@ -23,7 +24,7 @@ async function loadProductData() {
     console.log('Document exists:', productSnap.exists());
     
     if (productSnap.exists()) {
-      const product = { id: productSnap.id, ...productSnap.data() };
+        const product = { ...productSnap.data(), id: productSnap.id };
       console.log('Product loaded:', product);
       return product;
     } else {
@@ -222,20 +223,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // --- ADD TO CART --- //
   const addToCartBtn = document.querySelector('.product-info__add-to-cart');
-  const cartCount = document.getElementById('cart-count');
 
-  if (addToCartBtn && cartCount) {
+  if (addToCartBtn) {
     addToCartBtn.addEventListener('click', () => {
-      let count = parseInt(cartCount.textContent) || 0;
-      count++;
-      cartCount.textContent = count;
+      // We need to use the 'product' object loaded at the beginning.
+      // Ensure 'product' is available here. It is because we are in the populateProductPage scope?
+      // No, populateProductPage is outside.
+      // But we are inside 'DOMContentLoaded' callback where 'product' was fetched.
+      // Wait, this event listener is inside 'DOMContentLoaded'.
 
-      // Optional feedback
-      const originalText = addToCartBtn.textContent;
-      addToCartBtn.textContent = 'Added!';
-      setTimeout(() => {
-        addToCartBtn.textContent = originalText;
-      }, 2000);
+      if (product) {
+          addToCart(product);
+
+          // Feedback
+          const originalText = addToCartBtn.textContent;
+          addToCartBtn.textContent = 'Added!';
+          setTimeout(() => {
+            addToCartBtn.textContent = originalText;
+          }, 2000);
+      }
     });
   }
 

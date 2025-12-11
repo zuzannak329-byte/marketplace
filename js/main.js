@@ -1,4 +1,5 @@
 import { db } from './firebase-config.js';
+import { updateCartCount } from './cart.js';
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // Глобальное хранилище товаров и состояния фильтров
@@ -9,6 +10,8 @@ let currentSort = 'rating';
 const initApp = () => {
   console.log('Initializing App...');
   
+  updateCartCount();
+
   // 1. Проверка GSAP
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
