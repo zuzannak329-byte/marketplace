@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   
   if (!product) {
     // Показываем сообщение об ошибке
-    const productSection = document.querySelector('.product-details');
+    const productSection = document.querySelector('.product-section');
     if (productSection) {
       productSection.innerHTML = `
         <div style="text-align: center; padding: 60px 20px;">
