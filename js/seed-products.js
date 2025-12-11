@@ -9,7 +9,11 @@ const products = [
     oldPrice: 3200,
     image: 'assets/img/products/iphone-14-pro-max-deep-purple.png',
     images: [
-      'assets/img/products/iphone-14-pro-max-deep-purple.png'
+      'assets/img/products/iphone-14-pro-max-deep-purple.png',
+      'assets/img/product-page/image-57.png',
+      'assets/img/product-page/image-61-51b21e.png',
+      'assets/img/product-page/image-62-615a5a.png',
+      'assets/img/product-page/image-63-49f9fe.png'
     ],
     category: 'Phones',
     popular: true,
@@ -169,6 +173,72 @@ const products = [
       frontCamera: '12 MP',
       battery: '10 hours'
     }
+  },
+  {
+    id: 9,
+    name: 'Google Pixel 7 Pro 128GB Hazel',
+    price: 3100,
+    oldPrice: 3400,
+    image: 'assets/img/products/google-pixel-7-pro.jpg',
+    images: [
+      'assets/img/products/google-pixel-7-pro.jpg',
+      'assets/img/products/google-pixel-7-pro-side.jpg'
+    ],
+    category: 'Phones',
+    popular: true,
+    description: 'Google Pixel 7 Pro is Google’s best-of-everything phone. Powered by Google Tensor G2, it’s fast and secure, with an immersive display and amazing battery life.',
+    specs: {
+      screenSize: '6.7"',
+      cpu: 'Google Tensor G2',
+      cores: '8',
+      mainCamera: '50-48-12 MP',
+      frontCamera: '10.8 MP',
+      battery: '5000 mAh'
+    }
+  },
+  {
+    id: 10,
+    name: 'Canon EOS R5 Body',
+    price: 11500,
+    oldPrice: 12500,
+    image: 'assets/img/products/canon-eos-r5.jpg',
+    images: [
+      'assets/img/products/canon-eos-r5.jpg',
+      'assets/img/products/canon-eos-r5-back.jpg'
+    ],
+    category: 'Cameras',
+    popular: true,
+    description: 'The EOS R5 builds off the powerful legacy of Canon’s full frame cameras offering next generation refinements in image quality, performance and reliability.',
+    specs: {
+      screenSize: '3.2"',
+      cpu: 'DIGIC X',
+      cores: '-',
+      mainCamera: '45 MP',
+      frontCamera: '-',
+      battery: 'LP-E6NH'
+    }
+  },
+  {
+    id: 11,
+    name: 'Apple Watch Series 9 GPS 45mm Midnight',
+    price: 1350,
+    oldPrice: 1500,
+    image: 'assets/img/products/apple-watch-series-9-new.jpg',
+    images: [
+      'assets/img/products/apple-watch-series-9-new.jpg',
+      'assets/img/products/apple-watch-series-9-side.jpg'
+    ],
+    category: 'Smart Watches',
+    popular: true,
+    description: 'Smarter, brighter, and mightier. Apple Watch Series 9 helps you stay connected, active, healthy, and safe.',
+    specs: {
+      screenSize: '45mm',
+      cpu: 'Apple S9',
+      cores: '2',
+      mainCamera: '-',
+      frontCamera: '-',
+      battery: '18 hours'
+    }
   }
 ];
 
@@ -179,7 +249,7 @@ async function seedProducts() {
   const snapshot = await getDocs(productsRef);
   if (!snapshot.empty) {
     console.log('Products collection is not empty. Skipping seed.');
-    alert('Товары уже есть в базе данных! Используйте reseedProducts() для обновления.');
+    // alert('Товары уже есть в базе данных! Используйте reseedProducts() для обновления.');
     return;
   }
 
@@ -193,10 +263,10 @@ async function seedProducts() {
   try {
     await batch.commit();
     console.log('Products successfully added to Firestore!');
-    alert('Все товары успешно добавлены в базу данных!');
+    // alert('Все товары успешно добавлены в базу данных!');
   } catch (error) {
     console.error('Error adding products: ', error);
-    alert('Ошибка при добавлении товаров: ' + error.message);
+    // alert('Ошибка при добавлении товаров: ' + error.message);
   }
 }
 
@@ -236,10 +306,10 @@ async function reseedProducts() {
   try {
     await batch.commit();
     console.log('Products successfully re-seeded to Firestore!');
-    alert('Товары успешно обновлены! Обновите страницу.');
+    // alert('Товары успешно обновлены! Обновите страницу.');
   } catch (error) {
     console.error('Error re-seeding products: ', error);
-    alert('Ошибка: ' + error.message);
+    // alert('Ошибка: ' + error.message);
   }
 }
 
