@@ -179,7 +179,7 @@ async function initProductRendering() {
     }
     
     snapshot.forEach((doc) => {
-      allProducts.push({ id: doc.id, ...doc.data() });
+      allProducts.push({ ...doc.data(), id: doc.id });
     });
 
     console.log('Products loaded:', allProducts);
