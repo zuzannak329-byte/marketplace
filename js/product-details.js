@@ -126,13 +126,18 @@ function populateProductPage(product) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  const loadingEl = document.getElementById('product-loading');
+  const productSection = document.querySelector('.product-details');
+
   // Загружаем данные товара
   const product = await loadProductData();
-  
+
+  if (loadingEl) loadingEl.style.display = 'none';
+
   if (!product) {
     // Показываем сообщение об ошибке
-    const productSection = document.querySelector('.product-details');
     if (productSection) {
+      productSection.style.display = 'block';
       productSection.innerHTML = `
         <div style="text-align: center; padding: 60px 20px;">
           <h2 style="color: #333; margin-bottom: 20px;">Товар не найден</h2>
@@ -143,7 +148,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     return;
   }
-  
+
+  if (productSection) productSection.style.display = 'flex';
   populateProductPage(product);
   // --- GALLERY FUNCTIONALITY --- //
   const mainImage = document.getElementById('main-product-image');
