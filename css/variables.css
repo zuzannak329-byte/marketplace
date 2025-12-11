@@ -1,0 +1,79 @@
+:root {
+  --main-white: #ffffff;
+  --main-black: #000000;
+  --main-black-soft: #2b2b2b;
+  --main-red: #e10000;
+
+  --yellow: #ffb547;
+  --purple: #781dbc;
+  --gold: #e1b000;
+
+  --gray-100: #fafafa;
+  --gray-150: #f5f5f5;
+
+  --gray-200: #f6f6f6;
+  --gray-300: #e8e8e8;
+  --gray-400: #d9d9d9;
+  --gray-500: #cecece;
+  --gray-600: #b5b5b5;
+  --gray-700: #a4a4a4;
+  --gray-750: #989898;
+  --gray-800: #787878;
+  --gray-850: #6b6b6b;
+  --gray-900: #656565;
+  --gray-1000: #919191;
+  --burger-button: #080341;
+
+  --hero-bg-color: #211c24;
+
+  --gray-transparent-light: rgba(101, 101, 101, 0.5);
+  --gray-transparent-dark: rgba(0, 0, 0, 0.3);
+
+  --transparent: transparent;
+
+  --footer-text: #cfcfcf;
+  --spec-bg: #f4f4f4;
+  --spec-text: #4e4e4e;
+  --memory-button-border: #d5d5d5;
+  --memory-button-text: #6f6f6f;
+  --product-option-label: #0c0c0c;
+  --hover-dark: #333;
+
+  --border-radius-sm: 6px;
+  --border-radius-md: 8px;
+  --border-radius-card-sm: 7px;
+  --border-radius-lg: 9px;
+  --border-radius-xl: 15px;
+  --border-radius-xxl: 24px;
+
+  --header-height: 88px;
+
+  --container-width: clamp(21.5rem, 4.423rem + 72.864vw, 70rem);
+
+  --hero-media-width: clamp(20.063rem, 18.192rem + 7.981vw, 25.375rem);
+  --hero-media-heigth: clamp(18.063rem, 12.033rem + 25.728vw, 35.188rem);
+
+  --font-size-96px-72px: clamp(4.5rem, 3.972rem + 2.254vw, 6rem);
+  --conv16px-8px: clamp(0.5rem, 0.143rem + 0.952vw, 1rem);
+  --conv16px-12px: clamp(0.75rem, 0.662rem + 0.376vw, 1rem);
+  --conv24px-16px: clamp(1rem, 0.824rem + 0.751vw, 1.5rem);
+  --conv-32px-16px: clamp(1rem, 0.648rem + 1.502vw, 2rem);
+  --conv-48px-32px: clamp(2rem, 1.648rem + 1.502vw, 3rem);
+  --conv-48px-36px: clamp(2.25rem, 1.986rem + 1.127vw, 3rem);
+  --conv-64px-32px: clamp(2rem, 1.296rem + 3.005vw, 4rem);
+  --conv-64px-16px: clamp(1rem, -0.056rem + 4.507vw, 4rem);
+
+  --conv-93px-66px: clamp(4.125rem, 3.531rem + 2.535vw, 5.813rem);
+  --conv-72px-48px: clamp(3rem, 2.472rem + 2.254vw, 4.5rem);
+  --conv-80px-64px: clamp(4rem, 3.648rem + 1.502vw, 5rem);
+  --conv-88px-36px: clamp(2.25rem, 1.106rem + 4.883vw, 5.5rem);
+
+  --conv-104px-48px: clamp(3rem, 1.768rem + 5.258vw, 6.5rem);
+  --conv-112px-36px: clamp(2.25rem, 0.577rem + 7.136vw, 7rem);
+  --conv-150px-117px: clamp(7.313rem, 6.586rem + 3.099vw, 9.375rem);
+  --conv-160px-104px: clamp(6.5rem, 4rem + 6.667vw, 10rem);
+  --conv-384px-312px: clamp(19.5rem, 17.915rem + 6.761vw, 24rem);
+  --conv-413px-264px: clamp(16.5rem, 13.221rem + 13.991vw, 25.813rem);
+  --conv-516px-329px: clamp(20.563rem, 16.447rem + 17.559vw, 32.25rem);
+  --transition: all 0.3s ease;
+}

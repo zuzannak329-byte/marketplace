@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Page</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/product.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header__content">
+          <!-- Logo -->
+          <div class="header__logo">
+            <a href="home.html" class="logo" aria-label="Главная страница cyber">
+              <img
+                src="assets/icons/Logo.svg"
+                alt="cyber"
+                class="logo__image"
+                width="65"
+                height="23"
+              />
+            </a>
+          </div>
+
+          <!-- Search -->
+          <div class="header__search">
+            <form class="search-form" role="search">
+              <div class="search-form__wrapper">
+                <button type="submit" class="search-form__button" aria-label="Поиск">
+                  <img src="assets/icons/Search.svg" alt="Search" width="16" height="16" />
+                </button>
+                <input
+                  type="search"
+                  class="search-form__input"
+                  placeholder="Search"
+                  aria-label="Поиск товаров"
+                  id="search-input"
+                />
+              </div>
+            </form>
+          </div>
+
+          <!-- Navigation -->
+          <nav class="header__nav" role="navigation">
+            <ul class="nav-list">
+              <li class="nav-list__item">
+                <a href="home.html" class="nav-list__link nav-list__link--active" data-nav="home"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-list__item">
+                <a href="shop.html" class="nav-list__link" data-nav="shop">Shop</a>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- Auth & Cart -->
+          <div class="header__actions">
+            <div class="header__auth">
+              <!-- Unauthenticated state -->
+              <div class="auth-unauthenticated">
+                <a href="signin.html" class="auth-link" data-auth="signin">Sign in</a>
+                <a href="register.html" class="auth-link" data-auth="register">Register</a>
+              </div>
+              <!-- Authenticated state -->
+              <div class="auth-authenticated" style="display: none">
+                <button class="user-profile" aria-label="Профиль пользователя" id="user-profile">
+                  <img src="assets/icons/User.svg" alt="User" width="17" height="22" />
+                </button>
+                <button class="logout-button" data-auth="logout">Logout</button>
+              </div>
+            </div>
+            <div class="header__cart">
+              <a href="cart.html" class="cart-button" aria-label="Корзина" id="cart-button">
+                <img src="assets/icons/Cart.svg" alt="Cart" width="25" height="22" />
+                <span class="cart-button__count" id="cart-count">3</span>
+              </a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button class="header__menu-toggle" aria-label="Открыть меню" id="menu-toggle">
+              <span class="burger">
+                <span class="burger__line"></span>
+                <span class="burger__line"></span>
+                <span class="burger__line"></span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <div class="mobile-menu__content">
+        <div class="mobile-menu__header">
+          <button class="mobile-menu__close" id="mobile-menu-close">&times;</button>
+        </div>
+        <div class="mobile-menu__search">
+          <form class="search-form" role="search">
+            <div class="search-form__wrapper">
+              <button type="submit" class="search-form__button" aria-label="Поиск">
+                <img src="assets/icons/Search.svg" alt="Search" width="24" height="24" />
+              </button>
+              <input
+                type="search"
+                class="search-form__input"
+                placeholder="Search"
+                aria-label="Поиск товаров"
+              />
+            </div>
+          </form>
+        </div>
+        <nav class="mobile-menu__nav">
+          <ul class="mobile-nav-list">
+            <li class="mobile-nav-list__item">
+              <a href="home.html" class="mobile-nav-list__link">Home</a>
+            </li>
+            <li class="mobile-nav-list__item">
+              <a href="shop.html" class="mobile-nav-list__link">Shop</a>
+            </li>
+            <li class="mobile-nav-list__item">
+              <a href="signin.html" class="mobile-nav-list__link">Sign in</a>
+            </li>
+            <li class="mobile-nav-list__item">
+              <a href="register.html" class="mobile-nav-list__link">Register</a>
+            </li>
+          </ul>
+        </nav>
+        <div class="mobile-menu__footer">
+          <a href="cart.html" class="mobile-menu__cart-button">
+            <img src="assets/icons/Cart.svg" alt="Cart" width="32" height="32" />
+            <span>Cart</span>
+            <span class="cart-button__count">3</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Breadcrumbs Navigation -->
+    <nav class="breadcrumbs" aria-label="breadcrumb">
+      <div class="container">
+        <ul class="breadcrumbs__list">
+          <li class="breadcrumbs__item">
+            <a href="home.html" class="breadcrumbs__link">Home</a>
+          </li>
+          <li class="breadcrumbs__item" aria-hidden="true">
+            <img src="assets/icons/arrow.svg" alt="" />
+          </li>
+          <li class="breadcrumbs__item">
+            <a href="shop.html" class="breadcrumbs__link">Catalog</a>
+          </li>
+          <li class="breadcrumbs__item" aria-hidden="true">
+            <img src="assets/icons/arrow.svg" alt="" />
+          </li>
+          <li class="breadcrumbs__item">
+            <a href="shop.html" class="breadcrumbs__link">Smartphones</a>
+          </li>
+          <li class="breadcrumbs__item" aria-hidden="true">
+            <img src="assets/icons/arrow.svg" alt="" />
+          </li>
+          <li class="breadcrumbs__item">
+            <a href="shop.html" class="breadcrumbs__link">Apple</a>
+          </li>
+          <li class="breadcrumbs__item" aria-hidden="true">
+            <img src="assets/icons/arrow.svg" alt="" />
+          </li>
+          <li class="breadcrumbs__item">
+            <a href="shop.html" class="breadcrumbs__link breadcrumbs__link--active"
+              >iPhone 14 Pro Max</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-product">
+      <div class="product-page container">
+        <!-- Product Details -->
+        <section class="product-details">
+          <!-- Left Column: Image Gallery -->
+          <div class="product-details__gallery">
+            <div class="product-gallery__thumbnails">
+              <img
+                src="assets/img/product-page/image-57.png"
+                alt="Thumbnail 1"
+                class="thumbnail-image active"
+              />
+              <img
+                src="assets/img/product-page/image-61-51b21e.png"
+                alt="Thumbnail 2"
+                class="thumbnail-image"
+              />
+              <img
+                src="assets/img/product-page/image-62-615a5a.png"
+                alt="Thumbnail 3"
+                class="thumbnail-image"
+              />
+              <img
+                src="assets/img/product-page/image-63-49f9fe.png"
+                alt="Thumbnail 4"
+                class="thumbnail-image"
+              />
+            </div>
+            <div class="product-gallery__main-image">
+              <img
+                src="assets/img/product-page/image-57.png"
+                alt="Apple iPhone 14 Pro Max"
+                id="main-product-image"
+              />
+            </div>
+          </div>
+
+          <!-- Right Column: Product Info -->
+          <div class="product-details__info">
+            <div class="product-info__header">
+              <h1 class="product-info__title">Apple iPhone 14 Pro Max</h1>
+              <div class="product-info__price">
+                <span class="product-info__price--current">$1399</span>
+                <span class="product-info__price--old">$1499</span>
+              </div>
+            </div>
+
+            <div class="product-info__options-body">
+              <div class="product-info__options">
+                <!-- Color Selection -->
+                <div class="product-option color-selection">
+                  <span class="product-option__label">Select color :</span>
+                  <div class="product-option__values color-swatches">
+                    <button
+                      class="color-swatch active"
+                      data-color="#000000"
+                      style="background-color: #000000"
+                      aria-label="Black"
+                    ></button>
+                    <button
+                      class="color-swatch"
+                      data-color="#781DBC"
+                      style="background-color: #781dbc"
+                      aria-label="Purple"
+                    ></button>
+                    <button
+                      class="color-swatch"
+                      data-color="#E10000"
+                      style="background-color: #e10000"
+                      aria-label="Red"
+                    ></button>
+                    <button
+                      class="color-swatch"
+                      data-color="#E1B000"
+                      style="background-color: #e1b000"
+                      aria-label="Yellow"
+                    ></button>
+                    <button
+                      class="color-swatch"
+                      data-color="#E8E8E8"
+                      style="background-color: #e8e8e8"
+                      aria-label="Silver"
+                    ></button>
+                  </div>
+                </div>
+
+                <!-- Storage Selection -->
+                <div class="product-option memory-selection">
+                  <div class="product-option__values memory-buttons">
+                    <button class="memory-button" disabled>128GB</button>
+                    <button class="memory-button">256GB</button>
+                    <button class="memory-button">512GB</button>
+                    <button class="memory-button active">1TB</button>
+                  </div>
+                </div>
+
+                <div class="product-info__specs">
+                  <div class="spec-item">
+                    <img
+                      src="assets/img/product-page/screensize.svg"
+                      alt=""
+                      class="spec-item__icon"
+                    />
+                    <p class="spec-item__label">
+                      Screen size <br />
+                      <span>6.7"</span>
+                    </p>
+                  </div>
+                  <div class="spec-item">
+                    <img src="assets/img/product-page/cpu.svg" alt="" class="spec-item__icon" />
+                    <p class="spec-item__label">
+                      CPU <br />
+                      <span>Apple A16 Bionic</span>
+                    </p>
+                  </div>
+                  <div class="spec-item">
+                    <img src="assets/img/product-page/cores.svg" alt="" class="spec-item__icon" />
+                    <p class="spec-item__label">
+                      Number of Cores <br />
+                      <span>6</span>
+                    </p>
+                  </div>
+                  <div class="spec-item">
+                    <img
+                      src="assets/img/product-page/main-camera.svg"
+                      alt=""
+                      class="spec-item__icon"
+                    />
+                    <p class="spec-item__label">
+                      Main camera <br />
+                      <span>48-12-12 MP</span>
+                    </p>
+                  </div>
+                  <div class="spec-item">
+                    <img
+                      src="assets/img/product-page/front-camera.svg"
+                      alt=""
+                      class="spec-item__icon"
+                    />
+                    <p class="spec-item__label">
+                      Front-camera <br />
+                      <span>12 MP</span>
+                    </p>
+                  </div>
+                  <div class="spec-item">
+                    <img src="assets/img/product-page/battery.svg" alt="" class="spec-item__icon" />
+                    <p class="spec-item__label">
+                      Battery capacity <br />
+                      <span>4323 mAh</span>
+                    </p>
+                  </div>
+                </div>
+
+                <p class="product-info__description">
+                  Enhanced capabilities thanks toan enlarged display of 6.7 inchesand work without
+                  rechargingthroughout the day. Incredible photosas in weak, yesand in bright
+                  lightusing the new systemwith two cameras more...
+                </p>
+              </div>
+            </div>
+
+            <div class="product-info__footer">
+              <button class="product-info__add-to-cart btn btn--primary">Add to Cart</button>
+
+              <div class="product-info__meta">
+                <div class="meta-item">
+                  <div class="meta-item-img">
+                    <img
+                      src="assets/img/product-page/delivery.svg"
+                      alt=""
+                      class="meta-item__icon"
+                    />
+                  </div>
+                  <div class="meta-item-text">
+                    <p>Free Delivery</p>
+                    <span>1-2 day</span>
+                  </div>
+                </div>
+                <div class="meta-item">
+                  <div class="meta-item-img">
+                    <img src="assets/img/product-page/stock.svg" alt="" class="meta-item__icon" />
+                  </div>
+                  <div class="meta-item-text">
+                    <p>In Stock</p>
+                    <span>Today</span>
+                  </div>
+                </div>
+                <div class="meta-item">
+                  <div class="meta-item-img">
+                    <img
+                      src="assets/img/product-page/guaranteed.svg"
+                      alt=""
+                      class="meta-item__icon"
+                    />
+                  </div>
+                  <div class="meta-item-text">
+                    <p>Guaranteed</p>
+                    <span>1 year</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="reviews">
+          <h2 class="reviews__title">Reviews</h2>
+
+          <div class="reviews__content">
+            <div class="reviews__summary">
+              <div class="overall-rating">
+                <div class="overall-rating__score-container">
+                  <h4 class="overall-rating__score">4.8</h4>
+                  <p class="overall-rating__count">of 125 reviews</p>
+                  <div class="overall-rating__stars">
+                    <img src="assets/icons/star.svg" alt="star" />
+                    <img src="assets/icons/star.svg" alt="star" />
+                    <img src="assets/icons/star.svg" alt="star" />
+                    <img src="assets/icons/star.svg" alt="star" />
+                    <img src="assets/icons/star-half.svg" alt="star" />
+                  </div>
+                </div>
+              </div>
+              <div class="rating-bars">
+                <div class="rating-bar">
+                  <span class="rating-label">Excellent</span>
+                  <div class="progress-track">
+                    <div class="progress-fill" style="width: 99%"></div>
+                  </div>
+                  <span class="rating-count">100</span>
+                </div>
+                <div class="rating-bar">
+                  <span class="rating-label">Good</span>
+                  <div class="progress-track">
+                    <div class="progress-fill" style="width: 55%"></div>
+                  </div>
+                  <span class="rating-count">11</span>
+                </div>
+                <div class="rating-bar">
+                  <span class="rating-label">Average</span>
+                  <div class="progress-track">
+                    <div class="progress-fill" style="width: 21%"></div>
+                  </div>
+                  <span class="rating-count">3</span>
+                </div>
+                <div class="rating-bar">
+                  <span class="rating-label">Below Average</span>
+                  <div class="progress-track">
+                    <div class="progress-fill" style="width: 46%"></div>
+                  </div>
+                  <span class="rating-count">8</span>
+                </div>
+                <div class="rating-bar">
+                  <span class="rating-label">Poor</span>
+                  <div class="progress-track">
+                    <div class="progress-fill" style="width: 9%"></div>
+                  </div>
+                  <span class="rating-count">1</span>
+                </div>
+              </div>
+            </div>
+            <div class="reviews__main">
+              <div class="reviews__form-container">
+                <form id="review-form">
+                  <h3 class="review-form__title">Leave a Review</h3>
+                  <div class="review-form__stars" id="review-stars">
+                    <img src="assets/icons/star-empty.svg" alt="1 star" data-value="1" />
+                    <img src="assets/icons/star-empty.svg" alt="2 stars" data-value="2" />
+                    <img src="assets/icons/star-empty.svg" alt="3 stars" data-value="3" />
+                    <img src="assets/icons/star-empty.svg" alt="4 stars" data-value="4" />
+                    <img src="assets/icons/star-empty.svg" alt="5 stars" data-value="5" />
+                  </div>
+                  <input type="hidden" id="review-rating" name="rating" value="0" />
+                  <div class="review-form__input-group">
+                    <textarea id="review-comment" placeholder="Leave Comment" required></textarea>
+                    <button type="submit" class="btn btn--primary">Submit</button>
+                  </div>
+                </form>
+              </div>
+              <div class="reviews__list" id="reviews-list">
+                <div class="review-item">
+                  <div class="review-item__avatar">
+                    <img src="assets/img/product-page/review-avatar-1.png" alt="Grace Carey" />
+                  </div>
+                  <div class="review-item__content">
+                    <div class="review-item__header">
+                      <span class="review-item__author">Grace Carey</span>
+                      <span class="review-item__date">24 January, 2023</span>
+                    </div>
+                    <div class="review-item__stars">
+                      <img src="assets/icons/star.svg" alt="star" />
+                      <img src="assets/icons/star.svg" alt="star" />
+                      <img src="assets/icons/star.svg" alt="star" />
+                      <img src="assets/icons/star.svg" alt="star" />
+                      <img src="assets/icons/star-half.svg" alt="star" />
+                    </div>
+                    <p class="review-item__text">
+                      I was a bit nervous to be buying a secondhand phone from Amazon, but I
+                      couldn’t be happier with my purchase!! I have a pre-paid data plan so I was
+                      worried that this phone wouldn’t connect with my data plan, since the new
+                      phones don’t have the physical Sim tray anymore, but couldn’t have been
+                      easier! I bought an Unlocked black iPhone 14 Pro Max in excellent condition
+                      and everything is PERFECT. It was super easy to set up and the phone works and
+                      looks great. It truly was in excellent condition. Highly recommend!!!🖤
+                    </p>
+                  </div>
+                </div>
+                <div class="review-item">
+                  <div class="review-item__avatar">
+                    <img src="assets/img/product-page/review-avatar-2.png" alt="Ronald Richards" />
+                  </div>
+                  <div class="review-item__content">
+                    <div class="review-item__header">
+                      <span class="review-item__author">Ronald Richards</span>
+                      <span class="review-item__date">24 January, 2023</span>
+                    </div>
+                    <div class="review-item__stars">
+                      <img src="assets/icons/star.svg" alt="star" />
+                      <img src="assets/icons/star.svg" alt="star" />
+                      <img src="assets/icons/star.svg" alt="star" />
+                      <img src="assets/icons/star.svg" alt="star" />
+                      <img src="assets/icons/star.svg" alt="star" />
+                    </div>
+                    <p class="review-item__text">
+                      This phone has 1T storage and is durable. Plus all the new iPhones have a C
+                      port! Apple is phasing out the current ones! (All about the Benjamin’s) So if
+                      you want a phone that’s going to last grab an iPhone 14 pro max and get
+                      several cords and plugs.
+                    </p>
+                  </div>
+                </div>
+                <div class="review-item">
+                  <div class="review-item__avatar">
+                    <img src="assets/img/product-page/review-avatar-3.png" alt="Darcy King" />
+                  </div>
+                  <div class="review-item__content">
+                    <div class="review-item__header">
+                      <span class="review-item__author">Darcy King</span>
+                      <span class="review-item__date">24 January, 2023</span>
+                    </div>
+                    <div class="review-item__stars">
+                      <img src="assets/icons/star.svg" alt="star" />
+                      <img src="assets/icons/star.svg" alt="star" />
+                      <img src="assets/icons/star.svg" alt="star" />
+                      <img src="assets/icons/star.svg" alt="star" />
+                      <img src="assets/icons/star-empty.svg" alt="star" />
+                    </div>
+                    <p class="review-item__text">
+                      I might be the only one to say this but the camera is a little funky. Hoping
+                      it will change with a software update: otherwise, love this phone! Came in
+                      great condition
+                    </p>
+                  </div>
+                </div>
+                <div class="reviews__footer">
+                  <button class="btn btn--secondary">View More</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <a href="#" class="back-to-top">
+      <img src="assets/icons/arrow.svg" alt="Back to top" />
+    </a>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__info">
+          <div class="footer__logo-text">
+            <a href="/" class="footer__logo">
+              <img src="assets/icons/footer-logo.svg" alt="cyber" />
+            </a>
+            <p class="footer__description">
+              We are a residential interior design firm located in Portland. Our boutique-studio
+              offers more than
+            </p>
+          </div>
+          <div class="footer__nav">
+            <div class="footer__nav-col">
+              <h3 class="footer__nav-title">Services</h3>
+              <ul class="footer__nav-list">
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Bonus program</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Gift cards</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Credit and payment</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Service contracts</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Non-cash account</a>
+                </li>
+                <li class="footer__nav-item"><a href="#" class="footer__nav-link">Payment</a></li>
+              </ul>
+            </div>
+            <div class="footer__nav-col">
+              <h3 class="footer__nav-title">Assistance to the buyer</h3>
+              <ul class="footer__nav-list">
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Find an order</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Terms of delivery</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Exchange and return of goods</a>
+                </li>
+                <li class="footer__nav-item"><a href="#" class="footer__nav-link">Guarantee</a></li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Frequently asked questions</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Terms of use of the site</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer__socials">
+          <a href="#" class="footer__social-link" aria-label="Twitter">
+            <img src="assets/icons/twitter.svg" alt="Twitter" />
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Facebook">
+            <img src="assets/icons/facebook.svg" alt="Facebook" />
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Tiktok">
+            <img src="assets/icons/tiktok.svg" alt="Tiktok" />
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Instagram">
+            <img src="assets/icons/instagram.svg" alt="Instagram" />
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
+
+    <script type="module" src="js/product-details.js"></script>
+    <script type="module" src="js/auth-state.js"></script>
+  </body>
+</html>

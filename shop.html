@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop - MarketPlace</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/shop.css" />
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header__content">
+          <!-- Logo -->
+          <div class="header__logo">
+            <a href="home.html" class="logo" aria-label="Главная страница cyber">
+              <img
+                src="assets/icons/Logo.svg"
+                alt="cyber"
+                class="logo__image"
+                width="65"
+                height="23"
+              />
+            </a>
+          </div>
+
+          <!-- Search -->
+          <div class="header__search">
+            <form class="search-form" role="search">
+              <div class="search-form__wrapper">
+                <button type="submit" class="search-form__button" aria-label="Поиск">
+                  <img src="assets/icons/Search.svg" alt="Search" width="16" height="16" />
+                </button>
+                <input
+                  type="search"
+                  class="search-form__input"
+                  placeholder="Search"
+                  aria-label="Поиск товаров"
+                  id="search-input"
+                />
+              </div>
+            </form>
+          </div>
+
+          <!-- Navigation -->
+          <nav class="header__nav" role="navigation">
+            <ul class="nav-list">
+              <li class="nav-list__item">
+                <a href="home.html" class="nav-list__link" data-nav="home">Home</a>
+              </li>
+              <li class="nav-list__item">
+                <a href="shop.html" class="nav-list__link nav-list__link--active" data-nav="shop"
+                  >Shop</a
+                >
+              </li>
+            </ul>
+          </nav>
+
+          <!-- Auth & Cart -->
+          <div class="header__actions">
+            <div class="header__auth">
+              <!-- Unauthenticated state -->
+              <div class="auth-unauthenticated">
+                <a href="signin.html" class="auth-link" data-auth="signin">Sign in</a>
+                <a href="register.html" class="auth-link" data-auth="register">Register</a>
+              </div>
+              <!-- Authenticated state -->
+              <div class="auth-authenticated" style="display: none">
+                <button class="user-profile" aria-label="Профиль пользователя" id="user-profile">
+                  <img src="assets/icons/User.svg" alt="User" width="17" height="22" />
+                </button>
+                <button class="logout-button" data-auth="logout">Logout</button>
+              </div>
+            </div>
+            <div class="header__cart">
+              <a href="cart.html" class="cart-button" aria-label="Корзина" id="cart-button">
+                <img src="assets/icons/Cart.svg" alt="Cart" width="25" height="22" />
+                <span class="cart-button__count" id="cart-count">3</span>
+              </a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button class="header__menu-toggle" aria-label="Открыть меню" id="menu-toggle">
+              <span class="burger">
+                <span class="burger__line"></span>
+                <span class="burger__line"></span>
+                <span class="burger__line"></span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <div class="mobile-menu__content">
+        <div class="mobile-menu__header">
+          <button class="mobile-menu__close" id="mobile-menu-close">&times;</button>
+        </div>
+        <div class="mobile-menu__search">
+          <form class="search-form" role="search">
+            <div class="search-form__wrapper">
+              <button type="submit" class="search-form__button" aria-label="Поиск">
+                <img src="assets/icons/Search.svg" alt="Search" width="24" height="24" />
+              </button>
+              <input
+                type="search"
+                class="search-form__input"
+                placeholder="Search"
+                aria-label="Поиск товаров"
+              />
+            </div>
+          </form>
+        </div>
+        <nav class="mobile-menu__nav">
+          <ul class="mobile-nav-list">
+            <li class="mobile-nav-list__item">
+              <a href="home.html" class="mobile-nav-list__link">Home</a>
+            </li>
+            <li class="mobile-nav-list__item">
+              <a href="shop.html" class="mobile-nav-list__link">Shop</a>
+            </li>
+            <li class="mobile-nav-list__item">
+              <a href="signin.html" class="mobile-nav-list__link">Sign in</a>
+            </li>
+            <li class="mobile-nav-list__item">
+              <a href="register.html" class="mobile-nav-list__link">Register</a>
+            </li>
+          </ul>
+        </nav>
+        <div class="mobile-menu__footer">
+          <a href="cart.html" class="mobile-menu__cart-button">
+            <img src="assets/icons/Cart.svg" alt="Cart" width="32" height="32" />
+            <span>Cart</span>
+            <span class="cart-button__count">3</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Breadcrumbs Navigation -->
+    <nav class="breadcrumbs" aria-label="breadcrumb">
+      <div class="container">
+        <ul class="breadcrumbs__list">
+          <li class="breadcrumbs__item">
+            <a href="home.html" class="breadcrumbs__link">Home</a>
+          </li>
+          <li class="breadcrumbs__item" aria-hidden="true">
+            <img src="assets/icons/arrow.svg" alt="" />
+          </li>
+          <li class="breadcrumbs__item">
+            <a href="shop.html" class="breadcrumbs__link">Catalog</a>
+          </li>
+          <li class="breadcrumbs__item" aria-hidden="true">
+            <img src="assets/icons/arrow.svg" alt="" />
+          </li>
+          <li class="breadcrumbs__item">
+            <a href="shop.html" class="breadcrumbs__link breadcrumbs__link--active">Smartphones</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Main -->
+    <main class="main-shop">
+      <div class="container">
+        <div class="shop-content">
+          <!-- Sidebar -->
+          <aside class="shop-sidebar">
+            <div class="shop-sidebar__filter">
+              <div class="filter-group">
+                <div class="filter-group__header">
+                  <h3 class="filter-group__title">Categories</h3>
+                  <button class="filter-group__toggle">
+                    <img src="assets/icons/arrow-up.svg" alt="Toggle categories" />
+                  </button>
+                </div>
+                <div class="filter-group__body">
+                  <ul class="filter-group__list">
+                    <li class="filter-group__item">
+                      <a href="#" class="filter-group__link">All</a>
+                    </li>
+                    <li class="filter-group__item">
+                      <a href="#" class="filter-group__link filter-group__link--active">Phones</a>
+                    </li>
+                    <li class="filter-group__item">
+                      <a href="#" class="filter-group__link">Smart Watches</a>
+                    </li>
+                    <li class="filter-group__item">
+                      <a href="#" class="filter-group__link">Cameras</a>
+                    </li>
+                    <li class="filter-group__item">
+                      <a href="#" class="filter-group__link">Headphones</a>
+                    </li>
+                    <li class="filter-group__item">
+                      <a href="#" class="filter-group__link">Computers</a>
+                    </li>
+                    <li class="filter-group__item">
+                      <a href="#" class="filter-group__link">Gaming</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Products -->
+          <section class="shop-products">
+            <div class="shop-products__controls">
+              <p class="shop-products__count">Selected Products: <span>85</span></p>
+              <div class="shop-products__sort">
+                <div class="custom-select-wrapper">
+                  <div class="custom-select">
+                    <div class="custom-select__trigger">
+                      <span class="custom-select__value">By rating</span>
+                      <img
+                        src="assets/icons/arrow.svg"
+                        alt="arrow down"
+                        class="custom-select__arrow"
+                      />
+                    </div>
+                    <div class="custom-options">
+                      <span class="custom-option selected" data-value="rating">By rating</span>
+                      <span class="custom-option" data-value="price-asc">By price (asc)</span>
+                      <span class="custom-option" data-value="price-desc">By price (desc)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="shop-products__grid">
+              <!-- Products by JavaScript -->
+            </div>
+
+            <nav class="pagination" aria-label="Product page navigation">
+              <ul class="pagination__list">
+                <li class="pagination__item">
+                  <a href="#" class="pagination__arrow-link" aria-label="Previous Page">
+                    <img
+                      src="assets/icons/pagination-arrow.svg"
+                      alt=""
+                      class="pagination__arrow-icon pagination__arrow-icon--left"
+                    />
+                  </a>
+                </li>
+                <li class="pagination__item">
+                  <a href="#" class="pagination__link pagination__link--active" aria-current="page"
+                    >1</a
+                  >
+                </li>
+                <li class="pagination__item">
+                  <a href="#" class="pagination__link">2</a>
+                </li>
+                <li class="pagination__item">
+                  <a href="#" class="pagination__link">3</a>
+                </li>
+                <li class="pagination__item">
+                  <span class="pagination__dots">...</span>
+                </li>
+                <li class="pagination__item">
+                  <a href="#" class="pagination__link">12</a>
+                </li>
+                <li class="pagination__item">
+                  <a href="#" class="pagination__arrow-link" aria-label="Next Page">
+                    <img
+                      src="assets/icons/pagination-arrow.svg"
+                      alt=""
+                      class="pagination__arrow-icon"
+                    />
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <a href="#" class="back-to-top">
+      <img src="assets/icons/arrow.svg" alt="Back to top" />
+    </a>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__info">
+          <div class="footer__logo-text">
+            <a href="/" class="footer__logo">
+              <img src="assets/icons/footer-logo.svg" alt="cyber" />
+            </a>
+            <p class="footer__description">
+              We are a residential interior design firm located in Portland. Our boutique-studio
+              offers more than
+            </p>
+          </div>
+          <div class="footer__nav">
+            <div class="footer__nav-col">
+              <h3 class="footer__nav-title">Services</h3>
+              <ul class="footer__nav-list">
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Bonus program</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Gift cards</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Credit and payment</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Service contracts</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Non-cash account</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Payment</a>
+                </li>
+              </ul>
+            </div>
+            <div class="footer__nav-col">
+              <h3 class="footer__nav-title">Assistance to the buyer</h3>
+              <ul class="footer__nav-list">
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Find an order</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Terms of delivery</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Exchange and return of goods</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Guarantee</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Frequently asked questions</a>
+                </li>
+                <li class="footer__nav-item">
+                  <a href="#" class="footer__nav-link">Terms of use of the site</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer__socials">
+          <a href="#" class="footer__social-link" aria-label="Twitter">
+            <img src="assets/icons/footer-twitter.svg" alt="Twitter" />
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Facebook">
+            <img src="assets/icons/footer-facebook.svg" alt="Facebook" />
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Tiktok">
+            <img src="assets/icons/footer-tiktok.svg" alt="Tiktok" />
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Instagram">
+            <img src="assets/icons/footer-instagram.svg" alt="Instagram" />
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
+
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/auth-state.js"></script>
+  </body>
+</html>

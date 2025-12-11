@@ -1,0 +1,243 @@
+/* --- HERO Блок --- */
+.hero {
+  background-color: var(--hero-bg-color);
+  color: var(--main-white);
+  padding-top: 88px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.hero__slide {
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+.hero__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 3rem;
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--conv24px-16px);
+  z-index: 2;
+}
+
+.hero__eyebrow {
+  font-size: 1.5625rem;
+  line-height: 2rem;
+  font-weight: 600;
+  opacity: 0.4;
+}
+
+.hero__title {
+  font-size: var(--font-size-96px-72px);
+  font-weight: 100;
+  line-height: 4.5rem;
+  letter-spacing: -0.06rem;
+}
+
+.hero__title-highlight {
+  font-weight: 600;
+}
+
+.hero__description {
+  font-size: 1.125rem;
+  color: var(--gray-1000);
+}
+
+.hero__media {
+  width: 100%;
+  height: 100%;
+  max-width: var(--hero-media-width);
+  max-height: var(--hero-media-heigth);
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  visibility: visible;
+  transform-style: preserve-3d;
+}
+
+.slider-pagination {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.pagination-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-dot.active {
+  background-color: var(--main-white);
+}
+
+/* === CATEGORIES SECTION === */
+.categories {
+  padding: var(--conv-80px-64px) 0;
+  background-color: var(--gray-100);
+}
+
+.categories__title {
+  font-size: 1.5rem; /* 24px */
+  line-height: 2rem;
+  margin-bottom: 2rem;
+}
+
+.categories__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--conv-32px-16px);
+}
+
+.category-card {
+  background-color: var(--gray-400);
+  border-radius: var(--border-radius-xl);
+  height: 128px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.category-card__icon {
+  width: 48px;
+  height: 48px;
+}
+
+/* === POPULAR PRODUCTS SECTION === */
+.popular-products {
+  padding: 3.5rem 0; /* 56px */
+}
+
+.popular-products__title {
+  display: inline-block;
+  font-size: var(--conv24px-16px);
+  font-weight: 500;
+  line-height: 2rem;
+  letter-spacing: 0.01em;
+  margin-bottom: 2rem; /* 32px */
+  border-bottom: 2px solid var(--main-black);
+}
+
+.popular-products__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+  gap: 1rem; /* 16px */
+}
+
+/* === BIG SUMMER SALE SECTION === */
+.summer-sale {
+  background-image: url('../assets/img/summer-sale-bg.png');
+  background-size: cover;
+  background-position: center;
+  height: 448px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--main-white);
+  position: relative;
+}
+
+.summer-sale__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem; /* 40px */
+}
+
+.summer-sale__title {
+  font-size: var(--conv-72px-48px);
+  font-weight: 100;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.summer-sale__title strong {
+  font-weight: 500;
+}
+
+.summer-sale__subtitle {
+  font-size: 1rem; /* 16px */
+  font-weight: 400;
+  line-height: 2;
+  margin: 0;
+  color: var(--gray-800);
+}
+
+@media (min-width: 768px) {
+  .hero {
+    padding-top: 69px;
+  }
+  .hero__container {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .hero__content {
+    align-items: flex-start;
+    margin-bottom: 0;
+    flex: 1;
+    max-width: 607px;
+  }
+
+  .hero__media {
+    flex: 1;
+    justify-content: flex-end;
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero__description {
+    margin-bottom: 1rem;
+  }
+  .popular-products__grid {
+    grid-template-columns: repeat(2, minmax(163px, 1fr));
+  }
+  .summer-sale {
+    height: 509px;
+  }
+}

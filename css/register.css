@@ -1,0 +1,120 @@
+
+:root {
+    --input-padding-y: 0.5rem;
+}
+
+.register-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 4rem 0;
+}
+
+.register-container {
+    max-width: 598px; /* Adjusted for two columns */
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.register-header {
+    margin-bottom: 3rem; /* 48px */
+}
+
+.register-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem; /* 40px */
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+
+.register-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 1rem; /* 16px */
+    line-height: 1.5;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem; /* 40px */
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem; /* 32px */
+}
+
+.form-field {
+    position: relative;
+    text-align: left;
+}
+
+.form-field__input {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    padding: var(--input-padding-y) 0;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    background-color: transparent;
+}
+
+.form-field__input:focus {
+    outline: none;
+    border-bottom-color: var(--main-black);
+}
+
+.form-field__label {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: var(--main-black);
+    opacity: 0.4;
+    transition: all 0.2s ease-out;
+    pointer-events: none;
+}
+
+.form-field__input:focus + .form-field__label,
+.form-field__input:not(:placeholder-shown) + .form-field__label {
+    top: -0.5rem;
+    font-size: 0.875rem;
+    opacity: 0.8;
+}
+
+.register-btn {
+    padding: 0.75rem; /* 12px */
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem; /* 24px */
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.login-link-wrapper {
+    margin-top: 2rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+}
+
+.login-link-wrapper span {
+    color: var(--main-black);
+}
+
+.login-link-wrapper a {
+    color: #8C8C8C;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
