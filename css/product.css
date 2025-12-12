@@ -553,3 +553,31 @@
     padding: 2rem 0;
   }
 }
+
+/* Skeleton Loader Styles */
+.product-details--skeleton .skeleton-image {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: var(--border-radius-lg);
+}
+.product-details--skeleton .skeleton-title {
+  width: 70%;
+  height: 40px;
+  margin-bottom: 1.5rem;
+}
+.product-details--skeleton .skeleton-price {
+  width: 30%;
+  height: 32px;
+  margin-bottom: 2rem;
+}
+.product-details--skeleton .skeleton-text {
+  width: 100%;
+  height: 16px;
+  margin-bottom: 0.75rem;
+}
+.product-details--skeleton .skeleton-button {
+  width: 100%;
+  height: 56px;
+  margin-top: 1.5rem;
+  border-radius: var(--border-radius-md);
+}

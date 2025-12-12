@@ -1,6 +1,5 @@
 import { db } from './firebase-config.js';
 import { updateCartCount } from './cart.js';
-import { generateStars } from './utils.js';
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // Глобальное хранилище товаров и состояния фильтров
@@ -216,10 +215,6 @@ function createProductCard(product) {
       </div>
       <div class="product-card__info">
           <h3 class="product-card__title">${product.name}</h3>
-          <div class="product-card__rating" style="display: flex; align-items: center; gap: 2px; margin-bottom: 8px;">
-              ${generateStars(Math.round(product.rating || 0))}
-              <span style="color: #999; font-size: 12px; margin-left: 4px;">(${product.reviewCount || 0})</span>
-          </div>
           <div class="product-card__price-wrapper">
               <p class="product-card__price">${product.price} BYN</p>
               ${product.oldPrice ? `<p class="product-card__old-price">${product.oldPrice} BYN</p>` : ''}

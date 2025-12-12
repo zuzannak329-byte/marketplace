@@ -181,11 +181,23 @@
 
     <main class="main-product">
       <div class="product-page container">
-        <div id="product-loading" style="text-align: center; padding: 100px 0">
-          <h2>Loading...</h2>
-        </div>
+        <!-- Skeleton Loader -->
+        <section id="product-skeleton" class="product-details product-details--skeleton">
+          <div class="product-details__gallery">
+             <div class="skeleton skeleton-image"></div>
+          </div>
+          <div class="product-details__info">
+             <div class="skeleton skeleton-title"></div>
+             <div class="skeleton skeleton-price"></div>
+             <div class="skeleton skeleton-text"></div>
+             <div class="skeleton skeleton-text"></div>
+             <div class="skeleton skeleton-text" style="width: 80%"></div>
+             <div class="skeleton skeleton-button"></div>
+          </div>
+        </section>
+
         <!-- Product Details -->
-        <section class="product-details" style="display: none">
+        <section id="product-content" class="product-details" style="display: none">
           <!-- Left Column: Image Gallery -->
           <div class="product-details__gallery">
             <div class="product-gallery__thumbnails">

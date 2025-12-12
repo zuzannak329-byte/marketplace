@@ -127,13 +127,13 @@ function populateProductPage(product) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const loadingEl = document.getElementById('product-loading');
-  const productSection = document.querySelector('.product-details');
+  const skeletonEl = document.getElementById('product-skeleton');
+  const productSection = document.getElementById('product-content');
 
   // Загружаем данные товара
   const product = await loadProductData();
 
-  if (loadingEl) loadingEl.style.display = 'none';
+  if (skeletonEl) skeletonEl.style.display = 'none';
 
   if (!product) {
     // Показываем сообщение об ошибке
@@ -331,18 +331,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       const stars = starContainer.querySelectorAll('img');
       stars.forEach((s) => (s.src = 'assets/icons/star-empty.svg'));
     });
-  }
-
-  function generateStars(rating) {
-    let starsHtml = '';
-    for (let i = 0; i < 5; i++) {
-      if (i < rating) {
-        starsHtml += '<img src="assets/icons/star.svg" alt="star">';
-      } else {
-        starsHtml += '<img src="assets/icons/star-empty.svg" alt="star">';
-      }
-    }
-    return starsHtml;
   }
 
   // --- AUTO RESIZE TEXTAREA --- //
