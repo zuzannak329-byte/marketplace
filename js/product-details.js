@@ -124,6 +124,101 @@ function populateProductPage(product) {
   if (breadcrumbItems.length >= 3 && product.category) {
     breadcrumbItems[breadcrumbItems.length - 2].textContent = product.category;
   }
+
+  // Render reviews
+  renderReviews(product);
+}
+
+function renderReviews(product) {
+  if (!product) return;
+
+  const reviews = product.reviews || [];
+  const rating = product.rating || 0;
+  const reviewCount = product.reviewCount || reviews.length;
+
+  // 1. Overall Rating Score
+  const scoreEl = document.querySelector('.overall-rating__score');
+  if (scoreEl) scoreEl.textContent = rating.toFixed(1);
+
+  // 2. Review Count
+  const countEl = document.querySelector('.overall-rating__count');
+  if (countEl) countEl.textContent = `of ${reviewCount} reviews`;
+
+  // 3. Overall Stars
+  const starsContainer = document.querySelector('.overall-rating__stars');
+  if (starsContainer) {
+    starsContainer.innerHTML = generateStars(rating);
+  }
+
+  // 4. Rating Bars
+  const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+  reviews.forEach(r => {
+    const rVal = Math.round(r.rating);
+    if (counts[rVal] !== undefined) counts[rVal]++;
+  });
+
+  const total = reviews.length || 1; // avoid division by zero
+
+  const barContainer = document.querySelector('.rating-bars');
+  if (barContainer) {
+      // Map labels to rating values
+      const map = [
+          { label: 'Excellent', val: 5 },
+          { label: 'Good', val: 4 },
+          { label: 'Average', val: 3 },
+          { label: 'Below Average', val: 2 },
+          { label: 'Poor', val: 1 }
+      ];
+
+      barContainer.innerHTML = map.map(item => {
+          const count = counts[item.val];
+          const percent = (count / total) * 100;
+          return `
+            <div class="rating-bar">
+              <span class="rating-label">${item.label}</span>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: ${percent}%"></div>
+              </div>
+              <span class="rating-count">${count}</span>
+            </div>
+          `;
+      }).join('');
+  }
+
+  // 5. Reviews List
+  const reviewsList = document.getElementById('reviews-list');
+  if (reviewsList) {
+      reviewsList.innerHTML = ''; // Clear hardcoded
+
+      if (reviews.length === 0) {
+          reviewsList.innerHTML = '<p class="no-reviews">No reviews yet. Be the first to review!</p>';
+      } else {
+          // Sort by date (optional, assuming they might come unsorted) or just take latest
+          // For now, just render them.
+          reviews.forEach(review => {
+              const reviewEl = document.createElement('div');
+              reviewEl.className = 'review-item';
+              reviewEl.innerHTML = `
+                <div class="review-item__avatar">
+                    <img src="assets/img/product-page/review-avatar-${(Math.floor(Math.random() * 3) + 1)}.png" alt="${review.author}" onerror="this.src='assets/icons/User.svg'">
+                </div>
+                <div class="review-item__content">
+                    <div class="review-item__header">
+                        <span class="review-item__author">${review.author}</span>
+                        <span class="review-item__date">${review.date}</span>
+                    </div>
+                    <div class="review-item__stars">
+                        ${generateStars(review.rating)}
+                    </div>
+                    <p class="review-item__text">
+                      ${review.text}
+                    </p>
+                </div>
+              `;
+              reviewsList.appendChild(reviewEl);
+          });
+      }
+  }
 }
 
 document.addEventListener('DOMContentLoaded', async () => {

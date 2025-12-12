@@ -300,7 +300,8 @@ async function seedProducts() {
   const batch = writeBatch(db);
 
   products.forEach((product) => {
-    const docRef = doc(productsRef); // Создаем новый документ с авто-ID
+    // Use product.id as the document ID
+    const docRef = doc(db, "products", String(product.id));
     batch.set(docRef, product);
   });
 
@@ -337,11 +338,11 @@ async function reseedProducts() {
   await deleteAllProducts();
   
   console.log('Adding new products...');
-  const productsRef = collection(db, "products");
   const batch = writeBatch(db);
 
   products.forEach((product) => {
-    const docRef = doc(productsRef);
+    // Use product.id as the document ID
+    const docRef = doc(db, "products", String(product.id));
     batch.set(docRef, product);
   });
 
