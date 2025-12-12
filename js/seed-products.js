@@ -1,7 +1,40 @@
 import { db } from './firebase-config.js';
 import { collection, addDoc, getDocs, query, where, writeBatch, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-const products = [
+// Helper to generate reviews
+function getReviews(id) {
+    const baseReviews = [
+        { author: "Grace Carey", date: "24 January, 2023", rating: 5, text: "I was a bit nervous to be buying a secondhand phone from Amazon, but I couldn’t be happier with my purchase!!" },
+        { author: "Ronald Richards", date: "24 January, 2023", rating: 5, text: "This product has great features and is durable. Plus it looks amazing!" },
+        { author: "Darcy King", date: "24 January, 2023", rating: 4, text: "I might be the only one to say this but the quality is a little lacking. Hoping it will last." },
+        { author: "Alice Smith", date: "20 January, 2023", rating: 3, text: "It's okay, but delivery was slow and packaging was damaged." },
+        { author: "Bob Johnson", date: "15 January, 2023", rating: 5, text: "Best purchase this year! Highly recommend to everyone." },
+        { author: "Charlie Brown", date: "10 January, 2023", rating: 4, text: "Good value for money. Works as described." },
+        { author: "Diana Prince", date: "05 January, 2023", rating: 5, text: "Absolutely stunning! The performance is top notch." },
+        { author: "Evan Wright", date: "01 January, 2023", rating: 2, text: "Disappointed. Stopped working after a week." }
+    ];
+
+    // Deterministic selection based on ID
+    // Use ID as number if possible, else hash string
+    let numId = typeof id === 'number' ? id : 1;
+
+    const count = 3 + (numId % 4); // 3 to 6 reviews
+    const start = (numId * 2) % baseReviews.length;
+
+    let reviews = [];
+    for (let i = 0; i < count; i++) {
+        reviews.push(baseReviews[(start + i) % baseReviews.length]);
+    }
+    return reviews;
+}
+
+function calculateRating(reviews) {
+    if (!reviews || reviews.length === 0) return 0;
+    const total = reviews.reduce((acc, r) => acc + r.rating, 0);
+    return parseFloat((total / reviews.length).toFixed(1));
+}
+
+let products = [
   {
     id: 1,
     name: 'Apple iPhone 14 Pro Max 128GB Deep Purple',
@@ -242,6 +275,18 @@ const products = [
   }
 ];
 
+// Add reviews and ratings to products
+products = products.map(p => {
+    const reviews = getReviews(p.id);
+    const rating = calculateRating(reviews);
+    return {
+        ...p,
+        reviews,
+        rating,
+        reviewCount: reviews.length
+    };
+});
+
 async function seedProducts() {
   const productsRef = collection(db, "products");
   
@@ -249,7 +294,6 @@ async function seedProducts() {
   const snapshot = await getDocs(productsRef);
   if (!snapshot.empty) {
     console.log('Products collection is not empty. Skipping seed.');
-    // alert('Товары уже есть в базе данных! Используйте reseedProducts() для обновления.');
     return;
   }
 
@@ -263,10 +307,8 @@ async function seedProducts() {
   try {
     await batch.commit();
     console.log('Products successfully added to Firestore!');
-    // alert('Все товары успешно добавлены в базу данных!');
   } catch (error) {
     console.error('Error adding products: ', error);
-    // alert('Ошибка при добавлении товаров: ' + error.message);
   }
 }
 
@@ -306,10 +348,8 @@ async function reseedProducts() {
   try {
     await batch.commit();
     console.log('Products successfully re-seeded to Firestore!');
-    // alert('Товары успешно обновлены! Обновите страницу.');
   } catch (error) {
     console.error('Error re-seeding products: ', error);
-    // alert('Ошибка: ' + error.message);
   }
 }
 

@@ -1,15 +1,12 @@
 import { showToast } from './utils.js';
 import { db } from './firebase-config.js';
 import { addToCart } from './cart.js';
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { doc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // Загрузка данных товара по ID из URL
 async function loadProductData() {
   const urlParams = new URLSearchParams(window.location.search);
   const productId = urlParams.get('id');
-  
-  console.log('Full URL:', window.location.href);
-  console.log('Product ID from URL:', productId);
   
   if (!productId) {
     console.warn('No product ID in URL');
@@ -17,11 +14,8 @@ async function loadProductData() {
   }
 
   try {
-    console.log('Fetching product with ID:', productId);
     const productRef = doc(db, "products", productId);
     const productSnap = await getDoc(productRef);
-    
-    console.log('Document exists:', productSnap.exists());
     
     if (productSnap.exists()) {
         const product = { ...productSnap.data(), id: productSnap.id };
@@ -41,14 +35,11 @@ async function loadProductData() {
 function populateProductPage(product) {
   if (!product) return;
 
-  // Заголовок страницы
   document.title = `${product.name} - MarketPlace`;
 
-  // Название товара
   const titleEl = document.querySelector('.product-info__title');
   if (titleEl) titleEl.textContent = product.name;
 
-  // Цена
   const priceCurrentEl = document.querySelector('.product-info__price--current');
   if (priceCurrentEl) priceCurrentEl.textContent = `${product.price} BYN`;
 
@@ -62,34 +53,40 @@ function populateProductPage(product) {
     }
   }
 
-  // Главное изображение
   const mainImage = document.getElementById('main-product-image');
   if (mainImage && product.image) {
     mainImage.src = product.image;
     mainImage.alt = product.name;
   }
 
-  // Миниатюры (если есть массив изображений)
   const thumbnailsContainer = document.querySelector('.product-gallery__thumbnails');
   const thumbnails = document.querySelectorAll('.thumbnail-image');
   if (thumbnails.length > 0 && product.image) {
     thumbnails[0].src = product.image;
     thumbnails[0].classList.add('active');
-    // Скрываем остальные миниатюры если нет дополнительных изображений
-    if (!product.images || product.images.length <= 1) {
-      thumbnails.forEach((thumb, index) => {
+
+    // Reset thumbnails visibility first
+    thumbnails.forEach((thumb, index) => {
         if (index > 0) thumb.style.display = 'none';
+        thumb.classList.remove('active');
+    });
+    thumbnails[0].classList.add('active');
+
+    if (product.images && product.images.length > 1) {
+      product.images.forEach((imgSrc, index) => {
+          if (index < thumbnails.length) {
+              thumbnails[index].src = imgSrc;
+              thumbnails[index].style.display = 'block';
+          }
       });
     }
   }
 
-  // Описание товара
   const descriptionEl = document.querySelector('.product-info__description');
   if (descriptionEl && product.description) {
     descriptionEl.textContent = product.description;
   }
 
-  // Характеристики товара
   if (product.specs) {
     const specItems = document.querySelectorAll('.spec-item');
     specItems.forEach((item) => {
@@ -115,28 +112,125 @@ function populateProductPage(product) {
     });
   }
 
-  // Хлебные крошки - последний элемент
   const breadcrumbActive = document.querySelector('.breadcrumbs__link--active');
   if (breadcrumbActive) breadcrumbActive.textContent = product.name;
   
-  // Категория в хлебных крошках (предпоследний элемент)
   const breadcrumbItems = document.querySelectorAll('.breadcrumbs__link');
   if (breadcrumbItems.length >= 3 && product.category) {
     breadcrumbItems[breadcrumbItems.length - 2].textContent = product.category;
   }
+
+  // Render Reviews
+  renderReviews(product);
+}
+
+function renderReviews(product) {
+    const reviews = product.reviews || [];
+    const count = reviews.length;
+
+    // Calculate stats
+    const totalRating = reviews.reduce((acc, r) => acc + r.rating, 0);
+    const avgRating = count > 0 ? (totalRating / count).toFixed(1) : "0.0";
+
+    // Update Score
+    const scoreEl = document.querySelector('.overall-rating__score');
+    const countEl = document.querySelector('.overall-rating__count');
+    if (scoreEl) scoreEl.textContent = avgRating;
+    if (countEl) countEl.textContent = `of ${count} reviews`;
+
+    // Update Summary Stars
+    const summaryStars = document.querySelector('.overall-rating__stars');
+    if (summaryStars) {
+        summaryStars.innerHTML = generateStars(Math.round(avgRating));
+    }
+
+    // Update Bars
+    const counts = { 5:0, 4:0, 3:0, 2:0, 1:0 };
+    reviews.forEach(r => {
+        if (counts[r.rating] !== undefined) counts[r.rating]++;
+    });
+
+    const barsContainer = document.querySelector('.rating-bars');
+    if (barsContainer) {
+        barsContainer.innerHTML = '';
+        for (let i = 5; i >= 1; i--) {
+            const barCount = counts[i];
+            const percentage = count > 0 ? (barCount / count) * 100 : 0;
+            const barHtml = `
+                <div class="rating-bar">
+                  <span class="rating-label">${getLabelForRating(i)}</span>
+                  <div class="progress-track">
+                    <div class="progress-fill" style="width: ${percentage}%"></div>
+                  </div>
+                  <span class="rating-count">${barCount}</span>
+                </div>
+            `;
+            barsContainer.innerHTML += barHtml;
+        }
+    }
+
+    // Render List
+    const reviewsList = document.getElementById('reviews-list');
+    if (reviewsList) {
+        reviewsList.innerHTML = '';
+        if (count === 0) {
+            reviewsList.innerHTML = '<p>No reviews yet. Be the first to review!</p>';
+        } else {
+            reviews.forEach(review => {
+                const item = createReviewElement(review);
+                reviewsList.appendChild(item);
+            });
+        }
+    }
+}
+
+function getLabelForRating(r) {
+    const labels = { 5: 'Excellent', 4: 'Good', 3: 'Average', 2: 'Below Average', 1: 'Poor' };
+    return labels[r] || '';
+}
+
+function createReviewElement(review) {
+    const el = document.createElement('div');
+    el.className = 'review-item';
+    el.innerHTML = `
+        <div class="review-item__avatar">
+            <img src="assets/icons/User.svg" alt="User" style="background: #f5f5f5; padding: 10px;">
+        </div>
+        <div class="review-item__content">
+            <div class="review-item__header">
+                <span class="review-item__author">${review.author}</span>
+                <span class="review-item__date">${review.date}</span>
+            </div>
+            <div class="review-item__stars">
+                ${generateStars(review.rating)}
+            </div>
+            <p class="review-item__text">${review.text}</p>
+        </div>
+    `;
+    return el;
+}
+
+function generateStars(rating) {
+    let starsHtml = '';
+    for (let i = 0; i < 5; i++) {
+      if (i < rating) {
+        starsHtml += '<img src="assets/icons/star.svg" alt="star">';
+      } else {
+        starsHtml += '<img src="assets/icons/star-empty.svg" alt="star">';
+      }
+    }
+    return starsHtml;
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
   const loadingEl = document.getElementById('product-loading');
   const productSection = document.querySelector('.product-details');
 
-  // Загружаем данные товара
   const product = await loadProductData();
 
   if (loadingEl) loadingEl.style.display = 'none';
 
   if (!product) {
-    // Показываем сообщение об ошибке
     if (productSection) {
       productSection.style.display = 'block';
       productSection.innerHTML = `
@@ -152,18 +246,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (productSection) productSection.style.display = 'flex';
   populateProductPage(product);
-  // --- GALLERY FUNCTIONALITY --- //
+
+  // --- GALLERY --- //
   const mainImage = document.getElementById('main-product-image');
   const thumbnails = document.querySelectorAll('.thumbnail-image');
 
   if (mainImage && thumbnails.length > 0) {
     thumbnails.forEach((thumbnail) => {
       thumbnail.addEventListener('click', () => {
-        // Remove active class from all thumbnails
         thumbnails.forEach((t) => t.classList.remove('active'));
-        // Add active class to clicked thumbnail
         thumbnail.classList.add('active');
-        // Update main image source
         if (mainImage) {
           mainImage.src = thumbnail.src;
         }
@@ -173,7 +265,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // --- COLOR SELECTION --- //
   const colorSwatches = document.querySelectorAll('.color-swatch');
-
   if (colorSwatches.length > 0) {
     colorSwatches.forEach((swatch) => {
       swatch.addEventListener('click', () => {
@@ -185,7 +276,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // --- MEMORY SELECTION --- //
   const memoryButtons = document.querySelectorAll('.memory-button');
-
   if (memoryButtons.length > 0) {
     memoryButtons.forEach((button) => {
       if (!button.hasAttribute('disabled')) {
@@ -199,43 +289,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // --- DESCRIPTION TOGGLE --- //
   const description = document.querySelector('.product-info__description');
-  if (description) {
-    // Let's wrap "more..." in a span if it's not already
-    if (description.innerHTML.includes('more...')) {
-      const fullText =
-        description.innerHTML.replace('more...', '') +
-        ' This allows for stunning low-light photography and cinematic video quality. The new Action mode provides smooth handheld videos even when you are moving around. The display is 2x brighter outdoors.';
-
-      description.innerHTML = description.innerHTML.replace(
-        'more...',
-        '<span class="description-toggle">more...</span>',
-      );
-
+  if (description && description.innerHTML.includes('more...')) {
+      const fullText = description.innerHTML.replace('more...', '') + ' ... (full text) ...';
+      description.innerHTML = description.innerHTML.replace('more...', '<span class="description-toggle">more...</span>');
       const toggleBtn = description.querySelector('.description-toggle');
-
       if (toggleBtn) {
         toggleBtn.addEventListener('click', () => {
           description.innerHTML = fullText;
         });
       }
-    }
   }
 
   // --- ADD TO CART --- //
   const addToCartBtn = document.querySelector('.product-info__add-to-cart');
-
   if (addToCartBtn) {
     addToCartBtn.addEventListener('click', () => {
-      // We need to use the 'product' object loaded at the beginning.
-      // Ensure 'product' is available here. It is because we are in the populateProductPage scope?
-      // No, populateProductPage is outside.
-      // But we are inside 'DOMContentLoaded' callback where 'product' was fetched.
-      // Wait, this event listener is inside 'DOMContentLoaded'.
-
       if (product) {
           addToCart(product);
-
-          // Feedback
           const originalText = addToCartBtn.textContent;
           addToCartBtn.textContent = 'Added!';
           setTimeout(() => {
@@ -260,7 +330,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       star.addEventListener('click', () => {
         const rating = index + 1;
         ratingInput.value = rating;
-        // Store selected rating to ensure it stays after mouseout
         starContainer.dataset.selectedRating = rating;
         highlightStars(rating);
       });
@@ -271,78 +340,70 @@ document.addEventListener('DOMContentLoaded', async () => {
       highlightStars(selectedRating);
     });
 
-    function highlightStars(count) {
-      stars.forEach((s, i) => {
-        if (i < count) {
-          s.src = 'assets/icons/star.svg';
-        } else {
-          s.src = 'assets/icons/star-empty.svg';
-        }
-      });
-    }
+  }
+
+  function highlightStars(count) {
+    const stars = document.querySelectorAll('#review-stars img');
+    stars.forEach((s, i) => {
+      if (i < count) {
+        s.src = 'assets/icons/star.svg';
+      } else {
+        s.src = 'assets/icons/star-empty.svg';
+      }
+    });
   }
 
   // --- SUBMIT REVIEW --- //
   const reviewForm = document.getElementById('review-form');
-  const reviewsList = document.getElementById('reviews-list');
 
-  if (reviewForm && reviewsList) {
-    reviewForm.addEventListener('submit', (e) => {
+  if (reviewForm) {
+    reviewForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const rating = ratingInput.value;
+      const rating = parseInt(ratingInput.value);
       const comment = document.getElementById('review-comment').value;
 
-      if (rating === '0') {
+      if (!rating) {
         showToast('Please select a rating.');
         return;
       }
 
-      // Create new review item
-      const date = new Date().toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      });
-      const newReview = document.createElement('div');
-      newReview.className = 'review-item';
-      newReview.innerHTML = `
-                <div class="review-item__avatar">
-                    <img src="assets/icons/User.svg" alt="User" style="background: #f5f5f5; padding: 10px;">
-                </div>
-                <div class="review-item__content">
-                    <div class="review-item__header">
-                        <span class="review-item__author">You</span>
-                        <span class="review-item__date">${date}</span>
-                    </div>
-                    <div class="review-item__stars">
-                        ${generateStars(rating)}
-                    </div>
-                    <p class="review-item__text">${comment}</p>
-                </div>
-            `;
+      const submitBtn = reviewForm.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Submitting...';
+      submitBtn.disabled = true;
 
-      // Prepend to list
-      reviewsList.insertBefore(newReview, reviewsList.firstChild);
+      const newReview = {
+          author: "Guest User",
+          date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+          rating: rating,
+          text: comment
+      };
 
-      // Reset form
-      reviewForm.reset();
-      ratingInput.value = '0';
-      starContainer.dataset.selectedRating = 0;
-      const stars = starContainer.querySelectorAll('img');
-      stars.forEach((s) => (s.src = 'assets/icons/star-empty.svg'));
-    });
-  }
+      try {
+          const productRef = doc(db, "products", product.id);
+          await updateDoc(productRef, {
+              reviews: arrayUnion(newReview)
+          });
 
-  function generateStars(rating) {
-    let starsHtml = '';
-    for (let i = 0; i < 5; i++) {
-      if (i < rating) {
-        starsHtml += '<img src="assets/icons/star.svg" alt="star">';
-      } else {
-        starsHtml += '<img src="assets/icons/star-empty.svg" alt="star">';
+          if (!product.reviews) product.reviews = [];
+          product.reviews.unshift(newReview);
+          renderReviews(product);
+
+          showToast('Review added successfully!');
+          reviewForm.reset();
+          ratingInput.value = '0';
+          if(starContainer) {
+              starContainer.dataset.selectedRating = 0;
+              highlightStars(0);
+          }
+      } catch (error) {
+          console.error("Error submitting review:", error);
+          showToast('Failed to submit review.');
+      } finally {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
       }
-    }
-    return starsHtml;
+    });
   }
 
   // --- AUTO RESIZE TEXTAREA --- //
@@ -352,34 +413,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       this.style.height = 'auto';
       this.style.height = this.scrollHeight + 'px';
       if (this.value === '') {
-        this.style.height = '24px'; // Reset to initial height
+        this.style.height = '24px';
       }
     });
   }
 
   // --- VIEW MORE REVIEWS --- //
   const viewMoreBtn = document.querySelector('.reviews__footer .btn--secondary');
-
   if (viewMoreBtn) {
-    viewMoreBtn.addEventListener('click', () => {
-      // Simulate loading more
-      const originalText = viewMoreBtn.textContent;
-      viewMoreBtn.textContent = 'Loading...';
-
-      setTimeout(() => {
-        // Clone the existing reviews to add more
-        const currentReviews = reviewsList.querySelectorAll('.review-item');
-
-        // Clone the last 2 reviews and append
-        if (currentReviews.length > 0) {
-          for (let i = 0; i < Math.min(2, currentReviews.length); i++) {
-            const clone = currentReviews[i].cloneNode(true);
-            reviewsList.appendChild(clone);
-          }
-        }
-
-        viewMoreBtn.textContent = originalText;
-      }, 1000);
-    });
+      // Logic for view more... already rendered all?
+      // If we render all, this button might hide/show or just be removed.
+      // For now, let's just make it do nothing or alert.
+      viewMoreBtn.style.display = 'none'; // Hide it as we render all
   }
 });
