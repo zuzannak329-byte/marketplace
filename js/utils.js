@@ -67,3 +67,15 @@ export function clearFormError(form) {
         errorContainer.textContent = '';
     }
 }
+
+export function generateStars(rating) {
+    let starsHtml = '';
+    for (let i = 0; i < 5; i++) {
+      if (i < rating) {
+        starsHtml += '<img src="assets/icons/star.svg" alt="star" width="16" height="16">';
+      } else {
+        starsHtml += '<img src="assets/icons/star-empty.svg" alt="star" width="16" height="16">';
+      }
+    }
+    return starsHtml;
+}
